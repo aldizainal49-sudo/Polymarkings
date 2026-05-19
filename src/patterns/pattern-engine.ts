@@ -1,4 +1,4 @@
-import { Asset, MarketDirection, MispricingSignal, TradeSignal, SignalSource, WalletProfile } from '../types';
+import { Asset, MarketDirection, MispricingSignal, TradeSignal, SignalSource } from '../types';
 import { config } from '../config';
 import { logger } from '../config/logger';
 import { WalletScanner } from '../scanner/wallet-scanner';
@@ -366,7 +366,6 @@ export class PatternEngine {
     // Combined confidence and edge
     const relevantSignals = signals.filter(s => s.direction === direction);
     const avgConfidence = relevantSignals.reduce((sum, s) => sum + s.confidence, 0) / relevantSignals.length;
-    const maxEdge = Math.max(...relevantSignals.map(s => s.edge));
     const avgEdge = relevantSignals.reduce((sum, s) => sum + s.edge, 0) / relevantSignals.length;
 
     // Boost confidence when multiple signals agree
