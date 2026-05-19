@@ -1,9 +1,8 @@
-import { Asset, Market, MarketDirection, TradeExecution, TradeSignal } from '../types';
+import { Market, TradeExecution, TradeSignal } from '../types';
 import { config } from '../config';
 import { logger } from '../config/logger';
 import { KellyEngine } from '../kelly/kelly-engine';
 import { PolymarketClient } from './polymarket-client';
-import { v4 as uuidv4 } from 'crypto';
 
 /**
  * TRADE EXECUTOR
@@ -58,9 +57,8 @@ export class TradeExecutor {
     logger.info(`   Size: $${actualSize.toFixed(2)} | Kelly: ${(betSize / balance * 100).toFixed(1)}% of bankroll`);
     logger.info(`   Sources: ${signal.sources.map(s => s.type).join(', ')}`);
 
-    // Place order
+    // Place order - always BUY the token for our chosen direction
     const tokenId = market.tokenId;
-    const side = signal.direction === 'UP' ? 'BUY' : 'BUY'; // Always buying the direction token
 
     const orderResult = await this.client.placeOrder({
       tokenId,
